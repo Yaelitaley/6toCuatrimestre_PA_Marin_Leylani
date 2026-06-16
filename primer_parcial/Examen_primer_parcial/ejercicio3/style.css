@@ -1,0 +1,296 @@
+*, *::before, *::after 
+{ box-sizing: border-box; 
+margin: 0; padding: 0; }
+/* El * significa que todos los elementos de mi pagina before y after son 
+elementos decorativos que el css  que puede crear , es decir elimina margenes y 
+rellenos que el navegador coloca por defecto */
+
+:root {
+  --orange:  #FF6B35;
+  --dark:    #1A1A2E;
+  --mid:     #4A4A6A;
+  --light:   #F8F8FC;
+  --white:   #FFFFFF;
+  --shadow:  0 4px 20px rgba(26,26,46,.10);
+}
+/* guarada los colores en variables para evitar repetirlos*/
+body {
+  font-family: 'Poppins', sans-serif;
+  background: var(--light);
+  color: var(--dark);
+  min-height: 100vh; /*altura completa de la pantalla*/
+}
+/* fuente , color de texto para toda la pagina , por eso el body */
+
+/* ── HEADER ── */
+header {
+  background: var(--dark);
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  /* esto hace que el header se quede pegado , aun asi al hacer scrooll*/
+  position: sticky;
+  top: 0;
+  z-index: 100; /* esto lo pone por encima de todo*/
+}
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: -0.5px;
+}
+.logo span { color: var(--orange); }
+
+#search-bar {
+  flex: 1; /* el buscador ocupa todo el espacio libre del carrito*/
+  max-width: 420px;
+  margin: 0 2rem;
+  padding: .5rem 1rem;
+  border: none;
+  border-radius: 24px;
+  font-family: inherit;
+  font-size: .9rem;
+  outline: none;
+  background: rgba(255,255,255,.12);
+  color: var(--white);
+}
+#search-bar::placeholder { color: rgba(255,255,255,.5); }
+#search-bar:focus { background: rgba(255,255,255,.2); }
+
+.cart-icon {
+  color: var(--white);
+  font-size: 1.3rem;
+  cursor: pointer;
+  position: relative;
+}
+.cart-badge {
+  position: absolute;
+  top: -8px; right: -8px;
+  background: var(--orange);
+  color: #fff;
+  font-size: .65rem;
+  font-weight: 700;
+  border-radius: 50%;
+  width: 18px; height: 18px;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ── LAYOUT ── */
+.page { display: flex; max-width: 1280px; margin: 0 auto; padding: 2rem 1rem; gap: 2rem; }
+
+/* ── SIDEBAR ── */
+aside {
+  width: 220px;
+  flex-shrink: 0;
+}
+aside h2 {
+  font-size: .8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--mid);
+  margin-bottom: 1rem;
+}
+.cat-btn {
+  display: block;
+  width: 100%;
+  padding: .55rem 1rem;
+  margin-bottom: .4rem;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  background: var(--white);
+  font-family: inherit;
+  font-size: .85rem;
+  color: var(--dark);
+  cursor: pointer;
+  text-align: left;
+  transition: all .2s;
+  text-transform: capitalize;
+}
+.cat-btn:hover { border-color: var(--orange); color: var(--orange); }
+.cat-btn.active { background: var(--orange); color: #fff; border-color: var(--orange); }
+/*Al pasar el mouse aparece el borde naranja.
+ Si tiene seleccionado el fondo se vuelve naranja*/
+
+/* ── MAIN ── */
+main { flex: 1; }
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+.toolbar h1 { font-size: 1.3rem; font-weight: 700; }
+.toolbar span { font-size: .85rem; color: var(--mid); }
+
+/* ── GRID ── */
+#products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+/* ── CARD FLIP ── */
+.card-wrap {
+  height: 360px;
+  perspective: 1000px;
+}
+.card-inner {
+  position: relative;
+  width: 100%; height: 100%;
+  transform-style: preserve-3d; 
+  /*Activan el efecto 3D para que el giro de
+   las tarjetas se vea con profundidad*/
+  transition: transform .5s cubic-bezier(.4,0,.2,1);
+}
+.card-wrap:hover .card-inner { transform: rotateY(180deg); }
+
+.card-front, .card-back {
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  box-shadow: var(--shadow);
+}
+
+/* Front */
+.card-front {
+  background: var(--white);
+  display: flex;
+  flex-direction: column;
+  padding: 1.2rem;
+  overflow: hidden;
+}
+.card-img-box {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.card-img-box img {
+  max-height: 160px;
+  max-width: 100%;
+  object-fit: contain;
+  transition: transform .3s;
+}
+.card-wrap:hover .card-img-box img { transform: scale(1.05); }
+.card-category {
+  font-size: .68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .8px;
+  color: var(--orange);
+  margin-top: .8rem;
+}
+.card-title {
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--dark);
+  margin-top: .3rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.card-stars {
+  font-size: .75rem;
+  color: #f0a500;
+  margin-top: .4rem;
+}
+
+/* Back */
+.card-back {
+  background: var(--dark);
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  gap: 1rem;
+  color: var(--white);
+  text-align: center;
+}
+.back-price {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--orange);
+}
+.back-price small {
+  font-size: .9rem;
+  color: rgba(255,255,255,.5);
+  display: block;
+  margin-top: -.4rem;
+}
+.back-desc {
+  font-size: .75rem;
+  color: rgba(255,255,255,.7);
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.btn-add {
+  background: var(--orange);
+  color: #fff;
+  border: none;
+  border-radius: 24px;
+  padding: .6rem 1.6rem;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: .85rem;
+  cursor: pointer;
+  transition: opacity .2s;
+  width: 100%;
+}
+.btn-add:hover { opacity: .85; }
+
+/* ── SKELETON ── */
+.skeleton {
+  border-radius: 14px;
+  background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+  height: 360px;
+}
+@keyframes shimmer { to { background-position: -200% 0; } }
+
+/* ── ERROR ── */
+.error-msg {
+  text-align: center;
+  padding: 4rem;
+  color: var(--mid);
+  font-size: .95rem;
+}
+.error-msg strong { display: block; font-size: 2rem; margin-bottom: .5rem; }
+
+/* ── TOAST ── */
+#toast {
+  position: fixed;
+  bottom: 2rem; right: 2rem;
+  background: var(--dark);
+  color: #fff;
+  padding: .8rem 1.4rem;
+  border-radius: 8px;
+  font-size: .85rem;
+  font-weight: 600;
+  box-shadow: var(--shadow);
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity .3s, transform .3s;
+  pointer-events: none;
+  z-index: 999;
+}
+#toast.show { opacity: 1; transform: translateY(0); }
+#toast span { color: var(--orange); }
+
+@media (max-width: 700px) {
+  aside { display: none; }
+  #search-bar { margin: 0 1rem; }
+}

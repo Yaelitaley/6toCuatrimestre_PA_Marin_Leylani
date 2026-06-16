@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tienda Virtual</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header>
+  <div class="logo">Shop<span>Zone</span></div>
+  <input type="text" id="search-bar" placeholder="Buscar productos..." />
+  <div class="cart-icon" title="Carrito">
+    <span class="cart-badge" id="cart-count">0</span>
+  </div>
+</header>
+
+<div class="page">
+  <aside>
+    <h2>Categorías</h2>
+    <div id="categories"></div>
+  </aside>
+  <main>
+    <div class="toolbar">
+      <h1 id="section-title">Todos los productos</h1>
+      <span id="count-label"></span>
+    </div>
+    <div id="products-grid"></div>
+  </main>
+</div>
+
+<div id="toast">✔ <span id="toast-name"></span> agregado al carrito</div>
+
+<script src="app.js"></script>
+</body>
+</html>
