@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistema Gestor de Alumnos</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="app-header">
+    <h1>Gestiona Alumnos</h1>
+</header>
+
+<nav class="tabs">
+    <button class="tab-btn active" data-tab="tab-alumnos">Alumnos</button>
+    <button class="tab-btn" data-tab="tab-materias">Materias</button>
+    <button class="tab-btn" data-tab="tab-inscripciones">Inscripciones</button>
+</nav>
+
+<main>
+
+    <!-- TABLA ALUMNOS -->
+    <section id="tab-alumnos" class="tab-content active">
+
+        <div class="panel">
+            <h2>Buscar  alumnos</h2>
+            <div class="filtros">
+                <input type="text" id="filtroNombre" placeholder="ingresa nombre">
+                <input type="text" id="filtroMatricula" placeholder="ingresa matrícula">
+                <select id="filtroCarrera">
+                    <option value="">Todas las carreras</option>
+                </select>
+                <button id="btnBuscarAlumnos" class="btn btn-primary">Buscar</button>
+                <button id="btnLimpiarFiltros" class="btn btn-secondary">Limpiar</button>
+                <button id="btnNuevoAlumno" class="btn btn-success">+ Nuevo alumno</button>
+            </div>
+        </div>
+
+        <div class="panel">
+            <h2>Listado de alumnos</h2>
+            <div class="table-wrapper">
+                <table id="tablaAlumnos">
+                    <thead>
+                        <tr>
+                            <th>Matrícula</th>
+                            <th>Nombre</th>
+                            <th>Correo</th>
+                            <th>Carrera</th>
+                            <th>Cuatrimestre</th>
+                            <th>Estatus</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpoTablaAlumnos">
+                        <tr><td colspan="7" class="vacio">Cargando alumnos...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- TABLA MATERIAS  -->
+    <section id="tab-materias" class="tab-content">
+        <div class="panel">
+            <h2>Buscar / Filtrar materias</h2>
+            <div class="filtros">
+                <input type="text" id="filtroMateriaNombre" placeholder="Buscar por nombre...">
+                <select id="filtroMateriaCarrera">
+                    <option value="">Todas las carreras</option>
+                </select>
+                <select id="filtroMateriaCuatrimestre">
+                    <option value="">Todos los cuatrimestres</option>
+                </select>
+                <button id="btnBuscarMaterias" class="btn btn-primary">Buscar</button>
+                <button id="btnLimpiarFiltrosMaterias" class="btn btn-secondary">Limpiar</button>
+            </div>
+        </div>
+
+        <div class="panel">
+            <h2>Listado de materias</h2>
+            <div class="table-wrapper">
+                <table id="tablaMaterias">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Créditos</th>
+                            <th>Carrera</th>
+                            <th>Cuatrimestre</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpoTablaMaterias">
+                        <tr><td colspan="4" class="vacio">Cargando materias...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- TABLA DE INSCRIPCIONES  -->
+    <section id="tab-inscripciones" class="tab-content">
+        <div class="panel">
+            <h2>Consultar materias inscritas de un alumno</h2>
+            <div class="filtros">
+                <select id="selectAlumnoInscripcion">
+                    <option value="">Selecciona un alumno</option>
+                </select>
+                <button id="btnVerInscripciones" class="btn btn-primary">Ver materias inscritas</button>
+                <button id="btnNuevaInscripcion" class="btn btn-success">+ Nueva inscripción</button>
+            </div>
+        </div>
+
+        <div class="panel">
+            <h2>Materias inscritas</h2>
+            <div class="table-wrapper">
+                <table id="tablaInscripciones">
+                    <thead>
+                        <tr>
+                            <th>Materia</th>
+                            <th>Créditos</th>
+                            <th>Periodo</th>
+                            <th>Fecha inscripción</th>
+                            <th>Calificación</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpoTablaInscripciones">
+                        <tr><td colspan="6" class="vacio">Selecciona un alumno para ver en que esta inscrito</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<!--  CREAR EDITAR ALUMNO -->
+<div id="modalAlumno" class="modal">
+    <div class="modal-content">
+        <span class="cerrar-modal" data-close="modalAlumno">&times;</span>
+        <h2 id="tituloModalAlumno">Nuevo alumno</h2>
+        <form id="formAlumno">
+            <input type="hidden" id="alumnoId">
+
+            <label>Matrícula *</label>
+            <input type="text" id="alumnoMatricula" required>
+
+            <label>Nombre *</label>
+            <input type="text" id="alumnoNombre" required>
+
+            <label>Apellido paterno *</label>
+            <input type="text" id="alumnoApellidoPaterno" required>
+
+            <label>Apellido materno</label>
+            <input type="text" id="alumnoApellidoMaterno">
+
+            <label>Correo *</label>
+            <input type="email" id="alumnoCorreo" required>
+
+            <label>Teléfono</label>
+            <input type="text" id="alumnoTelefono">
+
+            <label>Fecha de nacimiento</label>
+            <input type="date" id="alumnoFechaNacimiento">
+
+            <label>Carrera *</label>
+            <select id="alumnoCarrera" required>
+                <option value="">Selecciona...</option>
+            </select>
+
+            <label>Cuatrimestre actual *</label>
+            <select id="alumnoCuatrimestre" required>
+                <option value="">Selecciona</option>
+            </select>
+
+            <label>Estatus *</label>
+            <select id="alumnoEstatus" required>
+                <option value="Activo">Activo</option>
+                <option value="Baja">Baja</option>
+                <option value="Egresado">Egresado</option>
+            </select>
+
+            <div class="modal-acciones">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <button type="button" class="btn btn-secondary" data-close="modalAlumno">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- CAMBIO RAPIDO DE ESTATUS Y CUATRIMESTRE -->
+<div id="modalCambioRapido" class="modal">
+    <div class="modal-content">
+        <span class="cerrar-modal" data-close="modalCambioRapido">&times;</span>
+        <h2>Cambiar estatus / cuatrimestre</h2>
+        <form id="formCambioRapido">
+            <input type="hidden" id="cambioAlumnoId">
+
+            <label>Estatus</label>
+            <select id="cambioEstatus">
+                <option value="Activo">Activo</option>
+                <option value="Baja">Baja</option>
+                <option value="Egresado">Egresado</option>
+            </select>
+
+            <label>Cuatrimestre actual</label>
+            <select id="cambioCuatrimestre">
+                <option value="">Selecciona</option>
+            </select>
+
+            <div class="modal-acciones">
+                <button type="submit" class="btn btn-primary">Actualizar</button>
+                <button type="button" class="btn btn-secondary" data-close="modalCambioRapido">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- NUEVA INSCRIPCION -->
+<div id="modalInscripcion" class="modal">
+    <div class="modal-content">
+        <span class="cerrar-modal" data-close="modalInscripcion">&times;</span>
+        <h2>Nueva inscripción</h2>
+        <form id="formInscripcion">
+            <label>Alumno *</label>
+            <select id="inscripcionAlumno" required>
+                <option value="">Selecciona un alumno</option>
+            </select>
+
+            <label>Materia *</label>
+            <select id="inscripcionMateria" required>
+                <option value="">Selecciona una materia</option>
+            </select>
+
+            <label>Fecha de inscripción *</label>
+            <input type="date" id="inscripcionFecha" required>
+
+            <label>Periodo</label>
+            <input type="text" id="inscripcionPeriodo" placeholder="Ej. 2026-2">
+
+            <label>Calificación</label>
+            <input type="number" id="inscripcionCalificacion" step="0.01" min="0" max="100">
+
+            <div class="modal-acciones">
+                <button type="submit" class="btn btn-primary">Registrar</button>
+                <button type="button" class="btn btn-secondary" data-close="modalInscripcion">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- NOTIFICACIONES -->
+<div id="toast" class="toast"></div>
+
+<script src="js/app.js"></script>
+</body>
+</html>
